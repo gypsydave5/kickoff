@@ -1,7 +1,5 @@
 package kickoff
 
-func NewInitialHandler() {}
-
 type Client interface {
 	Add(kickoff *Kickoff) error
 }
@@ -31,7 +29,7 @@ type InitialHandler interface {
 }
 
 type Questioner interface {
-	AskQuestion(string) string
+	AskQuestion(string) (string, error)
 }
 
 type Kickoff struct {
