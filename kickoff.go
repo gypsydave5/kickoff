@@ -1,7 +1,7 @@
 package kickoff
 
 type Client interface {
-	Add(kickoff *Kickoff) error
+	Add(kickoff Kickoff) error
 }
 
 type Engine struct {
@@ -25,17 +25,26 @@ func NewEngine(client Client, handler InitialHandler, questioner Questioner) *En
 }
 
 type InitialHandler interface {
-	Handle(questioner Questioner) (*Kickoff, error)
+	Handle(questioner Questioner) (Kickoff, error)
 }
 
 type Questioner interface {
 	AskQuestion(string) (string, error)
 }
 
-type Kickoff struct {
+type Kickoff interface {
+	Title() string
+	AddTitle(string)
+}
+
+type SimpleKickoff struct {
 	title string
 }
 
-func (k *Kickoff) Title() string {
+func (k *SimpleKickoff) AddTitle(s string) {
+	k.title = s
+}
+
+func (k *SimpleKickoff) Title() string {
 	return k.title
 }

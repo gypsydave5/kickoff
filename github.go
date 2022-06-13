@@ -35,7 +35,7 @@ type GitHubKickoffClient struct {
 	repo         string
 }
 
-func (c GitHubKickoffClient) Add(ko *Kickoff) error {
+func (c GitHubKickoffClient) Add(ko Kickoff) error {
 	_, _, err := c.gitHubClient.Issues.Create(context.Background(), c.owner, c.repo, &github.IssueRequest{
 		Title: github.String(ko.Title()),
 	})

@@ -40,20 +40,20 @@ func TestCreatingAnIssueWithATitle(t *testing.T) {
 	}
 }
 
-type MockInput struct {
+type MockQuestioner struct {
 	Answers   []string
 	Questions []string
 }
 
-func (mi MockInput) AskQuestion(question string) string {
+func (mi MockQuestioner) AskQuestion(question string) (string, error) {
 	mi.Questions = append(mi.Questions, question)
 	answer := mi.Answers[0]
 	mi.Answers = mi.Answers[1:]
-	return answer
+	return answer, nil
 }
 
-func NewMockInput(answers ...string) *MockInput {
-	return &MockInput{
+func NewMockInput(answers ...string) *MockQuestioner {
+	return &MockQuestioner{
 		Answers: answers,
 	}
 }
@@ -61,8 +61,4 @@ func NewMockInput(answers ...string) *MockInput {
 func RandomString() string {
 	rando := rand.New(rand.NewSource(time.Now().UnixNano()))
 	return strconv.Itoa(rando.Intn(1000))
-}
-
-func main() {
-	fmt.Println(RandomString())
 }
