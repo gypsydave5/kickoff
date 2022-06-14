@@ -18,7 +18,7 @@ func TestCreatingAnIssueWithATitle(t *testing.T) {
 
 	var ko = kickoff.NewEngine(
 		ghKOClient,
-		kickoff.NewTitleHandler(question),
+		kickoff.NewTitleHandler(kickoff.NewTextQuestion(question)),
 		NewMockQuestioner(answer),
 	)
 

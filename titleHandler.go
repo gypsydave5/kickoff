@@ -1,23 +1,11 @@
 package kickoff
 
-type TextQuestion struct {
-	question string
-}
-
-func NewTextQuestion(question string) *TextQuestion {
-	return &TextQuestion{question: question}
-}
-
-func (t *TextQuestion) String() string {
-	return t.question
-}
-
 type TitleHandler struct {
 	question Question
 }
 
-func NewTitleHandler(question string) *TitleHandler {
-	return &TitleHandler{question: NewTextQuestion(question)}
+func NewTitleHandler(question Question) *TitleHandler {
+	return &TitleHandler{question}
 }
 
 func (t TitleHandler) Handle(questioner Questioner) (*Kickoff, error) {

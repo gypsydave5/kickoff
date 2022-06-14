@@ -37,3 +37,15 @@ func NewTextAnswer(answer string) *TextAnswer {
 func (t *TextAnswer) String() string {
 	return t.answer
 }
+
+type TextQuestion struct {
+	question string
+}
+
+func NewTextQuestion(question string) *TextQuestion {
+	return &TextQuestion{question: question}
+}
+
+func (t *TextQuestion) String() string {
+	return t.question
+}

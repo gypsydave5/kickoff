@@ -9,7 +9,7 @@ import (
 func main() {
 	engine := kickoff.NewEngine(
 		kickoff.NewGitHubPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient()),
-		kickoff.NewTitleHandler("Title: "),
+		kickoff.NewTitleHandler(kickoff.NewTextQuestion("Title: ")),
 		kickoff.NewTextQuestioner(os.Stdin, os.Stdout),
 	)
 
