@@ -1,4 +1,4 @@
-package doubles
+package test_double
 
 import "github.com/gypsydave5/kickoff"
 

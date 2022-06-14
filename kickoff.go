@@ -29,11 +29,16 @@ type InitialHandler interface {
 	Handle(questioner Questioner) (*Kickoff, error)
 }
 
+type Handler interface {
+	Handle(kickoff *Kickoff, questioner Questioner) (*Kickoff, error)
+}
+
 // Kickoff represents a kickoff
 type Kickoff struct {
 	Title string
+	Body  string
 }
 
 func NewKickoff(title string) *Kickoff {
-	return &Kickoff{title}
+	return &Kickoff{Title: title}
 }

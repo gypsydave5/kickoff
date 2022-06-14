@@ -42,6 +42,7 @@ type GitHubPersistence struct {
 func (c GitHubPersistence) Add(ko *Kickoff) error {
 	_, _, err := c.gitHubClient.Issues.Create(context.Background(), c.owner, c.repo, &github.IssueRequest{
 		Title: github.String(ko.Title),
+		Body:  github.String(ko.Body),
 	})
 	return err
 }

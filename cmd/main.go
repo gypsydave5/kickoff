@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gypsydave5/kickoff"
+	"github.com/gypsydave5/kickoff/handler"
 	"log"
 	"os"
 )
@@ -9,7 +10,7 @@ import (
 func main() {
 	engine := kickoff.NewEngine(
 		kickoff.NewGitHubPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient()),
-		kickoff.NewTitleHandler(kickoff.NewTextQuestion("Title: ")),
+		handler.NewTitleHandler(kickoff.NewTextQuestion("Title: ")),
 		kickoff.NewTextQuestioner(os.Stdin, os.Stdout),
 	)
 
