@@ -5,17 +5,17 @@ import (
 	"fmt"
 	"github.com/google/go-github/v45/github"
 	"github.com/gypsydave5/kickoff"
-	"math/rand"
-	"strconv"
+	"github.com/gypsydave5/kickoff/test/doubles"
+	"github.com/gypsydave5/kickoff/test/random"
 	"testing"
 	"time"
 )
 
 func TestCreatingAnIssueWithATitle(t *testing.T) {
 	ghKOClient := kickoff.NewGitHubPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient())
-	question := RandomString()
-	answer := RandomString()
-	spyQuestioner := NewSpyQuestioner(answer)
+	question := random.RandomString()
+	answer := random.RandomString()
+	spyQuestioner := doubles.NewSpyQuestioner(answer)
 
 	var ko = kickoff.NewEngine(
 		ghKOClient,
@@ -52,29 +52,4 @@ func TestCreatingAnIssueWithATitle(t *testing.T) {
 		t.Errorf("expected title of %q but got %q", answer, title)
 	}
 
-}
-
-type SpyQuesitoner struct {
-	Answers   []kickoff.Answer
-	Questions []kickoff.Question
-}
-
-func (sq *SpyQuesitoner) AskQuestion(question kickoff.Question) (kickoff.Answer, error) {
-	sq.Questions = append(sq.Questions, question)
-	answer := sq.Answers[0]
-	sq.Answers = sq.Answers[1:]
-	return answer, nil
-}
-
-func NewSpyQuestioner(answers ...string) *SpyQuesitoner {
-	q := &SpyQuesitoner{}
-	for _, answer := range answers {
-		q.Answers = append(q.Answers, kickoff.NewTextAnswer(answer))
-	}
-	return q
-}
-
-func RandomString() string {
-	rando := rand.New(rand.NewSource(time.Now().UnixNano()))
-	return strconv.Itoa(rando.Intn(1000))
 }
