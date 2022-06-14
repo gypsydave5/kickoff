@@ -15,16 +15,25 @@ func TestCreatingAnIssueWithATitle(t *testing.T) {
 	ghKOClient := kickoff.NewGitHubPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient())
 	question := RandomString()
 	answer := RandomString()
+	spyQuestioner := NewSpyQuestioner(answer)
 
 	var ko = kickoff.NewEngine(
 		ghKOClient,
 		kickoff.NewTitleHandler(kickoff.NewTextQuestion(question)),
-		NewMockQuestioner(answer),
+		spyQuestioner,
 	)
 
 	err := ko.Start()
 	if err != nil {
 		t.Errorf("error: %s", err)
+	}
+
+	if len(spyQuestioner.Questions) != 1 {
+		t.Errorf("Wrong number of questions asked: %d", len(spyQuestioner.Questions))
+	}
+	askedQuestion := spyQuestioner.Questions[0].String()
+	if askedQuestion != question {
+		t.Errorf("Wanted question %q to be asked, but it was %q", question, askedQuestion)
 	}
 
 	time.Sleep(time.Second * 5) // takes a while for the change to happen in GH
@@ -38,22 +47,27 @@ func TestCreatingAnIssueWithATitle(t *testing.T) {
 		t.Log(issues.Issues)
 		t.Error("Kickoff issue not created")
 	}
+	title := *(issues.Issues[0].Title)
+	if title != answer {
+		t.Errorf("expected title of %q but got %q", answer, title)
+	}
+
 }
 
-type MockQuestioner struct {
+type SpyQuesitoner struct {
 	Answers   []kickoff.Answer
 	Questions []kickoff.Question
 }
 
-func (mi MockQuestioner) AskQuestion(question kickoff.Question) (kickoff.Answer, error) {
-	mi.Questions = append(mi.Questions, question)
-	answer := mi.Answers[0]
-	mi.Answers = mi.Answers[1:]
+func (sq *SpyQuesitoner) AskQuestion(question kickoff.Question) (kickoff.Answer, error) {
+	sq.Questions = append(sq.Questions, question)
+	answer := sq.Answers[0]
+	sq.Answers = sq.Answers[1:]
 	return answer, nil
 }
 
-func NewMockQuestioner(answers ...string) *MockQuestioner {
-	q := &MockQuestioner{}
+func NewSpyQuestioner(answers ...string) *SpyQuesitoner {
+	q := &SpyQuesitoner{}
 	for _, answer := range answers {
 		q.Answers = append(q.Answers, kickoff.NewTextAnswer(answer))
 	}
