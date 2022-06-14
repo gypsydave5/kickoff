@@ -2,7 +2,7 @@ package kickoff
 
 // Persistence interface represents some external service where your kickoffs are stored once generated.
 type Persistence interface {
-	Add(kickoff Kickoff) error
+	Add(kickoff *Kickoff) error
 }
 
 type Engine struct {
@@ -26,22 +26,14 @@ func NewEngine(client Persistence, handler InitialHandler, questioner Questioner
 }
 
 type InitialHandler interface {
-	Handle(questioner Questioner) (Kickoff, error)
+	Handle(questioner Questioner) (*Kickoff, error)
 }
 
-type Kickoff interface {
-	Title() string
-	AddTitle(string)
+// Kickoff represents a kickoff
+type Kickoff struct {
+	Title string
 }
 
-type SimpleKickoff struct {
-	title string
-}
-
-func (k *SimpleKickoff) AddTitle(s string) {
-	k.title = s
-}
-
-func (k *SimpleKickoff) Title() string {
-	return k.title
+func NewKickoff(title string) *Kickoff {
+	return &Kickoff{title}
 }

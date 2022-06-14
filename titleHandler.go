@@ -20,14 +20,10 @@ func NewTitleHandler(question string) *TitleHandler {
 	return &TitleHandler{question: NewTextQuestion(question)}
 }
 
-func (t TitleHandler) Handle(questioner Questioner) (Kickoff, error) {
+func (t TitleHandler) Handle(questioner Questioner) (*Kickoff, error) {
 	answer, err := questioner.AskQuestion(t.question)
 	if err != nil {
-		return &SimpleKickoff{}, err
+		return &Kickoff{}, err
 	}
 	return NewKickoff(answer.String()), nil
-}
-
-func NewKickoff(title string) *SimpleKickoff {
-	return &SimpleKickoff{title}
 }

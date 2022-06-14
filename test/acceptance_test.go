@@ -12,7 +12,7 @@ import (
 )
 
 func TestCreatingAnIssueWithATitle(t *testing.T) {
-	ghKOClient := kickoff.NewGitHubKickoffClient("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient())
+	ghKOClient := kickoff.NewGitHubPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient())
 	question := RandomString()
 	answer := RandomString()
 
