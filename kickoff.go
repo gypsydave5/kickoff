@@ -1,13 +1,14 @@
 package kickoff
 
-type Client interface {
+// Persistence interface represents some external service where your kickoffs are stored once generated.
+type Persistence interface {
 	Add(kickoff Kickoff) error
 }
 
 type Engine struct {
-	client     Client
-	handler    InitialHandler
-	questioner Questioner
+	persistence Persistence
+	handler     InitialHandler
+	questioner  Questioner
 }
 
 func (e Engine) Start() error {
@@ -16,11 +17,11 @@ func (e Engine) Start() error {
 		return err
 	}
 
-	err = e.client.Add(ko)
+	err = e.persistence.Add(ko)
 	return err
 }
 
-func NewEngine(client Client, handler InitialHandler, questioner Questioner) *Engine {
+func NewEngine(client Persistence, handler InitialHandler, questioner Questioner) *Engine {
 	return &Engine{client, handler, questioner}
 }
 
