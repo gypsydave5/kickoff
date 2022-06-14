@@ -11,17 +11,29 @@ type TextQuestioner struct {
 	output io.Writer
 }
 
-func (t TextQuestioner) AskQuestion(question string) (string, error) {
+func (t TextQuestioner) AskQuestion(question Question) (Answer, error) {
 	_, err := fmt.Fprint(t.output, question)
 	if err != nil {
-		return "", err
+		return NewTextAnswer(""), err
 	}
 	scanner := bufio.NewScanner(t.input)
 	scanner.Scan()
 	text := scanner.Text()
-	return text, nil
+	return NewTextAnswer(text), nil
 }
 
 func NewTextQuestioner(input io.Reader, output io.Writer) *TextQuestioner {
 	return &TextQuestioner{input: input, output: output}
+}
+
+type TextAnswer struct {
+	answer string
+}
+
+func NewTextAnswer(answer string) *TextAnswer {
+	return &TextAnswer{answer: answer}
+}
+
+func (t *TextAnswer) String() string {
+	return t.answer
 }

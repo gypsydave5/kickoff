@@ -19,7 +19,7 @@ func TestCreatingAnIssueWithATitle(t *testing.T) {
 	var ko = kickoff.NewEngine(
 		ghKOClient,
 		kickoff.NewTitleHandler(question),
-		NewMockInput(answer),
+		NewMockQuestioner(answer),
 	)
 
 	err := ko.Start()
@@ -41,21 +41,23 @@ func TestCreatingAnIssueWithATitle(t *testing.T) {
 }
 
 type MockQuestioner struct {
-	Answers   []string
-	Questions []string
+	Answers   []kickoff.Answer
+	Questions []kickoff.Question
 }
 
-func (mi MockQuestioner) AskQuestion(question string) (string, error) {
+func (mi MockQuestioner) AskQuestion(question kickoff.Question) (kickoff.Answer, error) {
 	mi.Questions = append(mi.Questions, question)
 	answer := mi.Answers[0]
 	mi.Answers = mi.Answers[1:]
 	return answer, nil
 }
 
-func NewMockInput(answers ...string) *MockQuestioner {
-	return &MockQuestioner{
-		Answers: answers,
+func NewMockQuestioner(answers ...string) *MockQuestioner {
+	q := &MockQuestioner{}
+	for _, answer := range answers {
+		q.Answers = append(q.Answers, kickoff.NewTextAnswer(answer))
 	}
+	return q
 }
 
 func RandomString() string {

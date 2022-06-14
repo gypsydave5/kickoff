@@ -28,10 +28,6 @@ type InitialHandler interface {
 	Handle(questioner Questioner) (Kickoff, error)
 }
 
-type Questioner interface {
-	AskQuestion(string) (string, error)
-}
-
 type Kickoff interface {
 	Title() string
 	AddTitle(string)
