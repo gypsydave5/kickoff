@@ -9,8 +9,8 @@ import (
 )
 
 func TestTextQuestioner_ReadingAndWriting(t *testing.T) {
-	answer := random.String()
-	question := random.String()
+	answer := random.String16()
+	question := random.String16()
 
 	out := new(strings.Builder)
 	in := strings.NewReader(fmt.Sprintf("%s\n", answer))

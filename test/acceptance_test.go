@@ -14,11 +14,11 @@ import (
 
 func TestCreatingAKickoffOnGitHub(t *testing.T) {
 	ghKOClient := kickoff.NewGitHubPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient())
-	question := random.String()
-	answer := random.String()
+	question := random.String16()
+	answer := random.String16()
 	spyQuestioner := test_double.NewSpyQuestioner(answer)
 
-	expectedBody := random.String()
+	expectedBody := random.String16()
 	seq := handler.NewSequenceHandler(
 		handler.NewTitleHandler(kickoff.NewTextQuestion(question)),
 		handler.NewBodyHandler(expectedBody),
