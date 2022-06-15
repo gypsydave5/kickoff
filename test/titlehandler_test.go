@@ -9,8 +9,8 @@ import (
 )
 
 func TestTitleHandler_Handle(t *testing.T) {
-	question := random.RandomString()
-	expectedTitle := random.RandomString()
+	question := random.String()
+	expectedTitle := random.String()
 
 	h := handler.NewTitleHandler(kickoff.NewTextQuestion(question))
 	sq := test_double.NewSpyQuestioner(expectedTitle)
