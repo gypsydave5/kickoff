@@ -8,7 +8,8 @@ import (
 )
 
 func TestBodyHandler(t *testing.T) {
-	h := handler.NewBody("body")
+	body := "body"
+	h := handler.NewBody(body)
 	sq := test_double.NewSpyQuestioner()
 	initalKickOff := kickoff.NewKickoff("")
 
@@ -18,7 +19,8 @@ func TestBodyHandler(t *testing.T) {
 		t.Errorf("Expected no questions to be asked, but questions were asked...")
 	}
 
-	if ko.Body != "body" {
-		t.Errorf("Expected body %q but got %q", "body", ko.Body)
+	expectedBody := "\n\n\n" + body
+	if ko.Body != expectedBody {
+		t.Errorf("Expected body %q but got %q", expectedBody, ko.Body)
 	}
 }

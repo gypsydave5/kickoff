@@ -8,9 +8,10 @@ import (
 )
 
 func TestNewSequence(t *testing.T) {
+	body := "body"
 	seq := h.NewSequence(
 		h.NewTitle(questioner.NewTextQuestion("hello")),
-		h.NewBody("body"),
+		h.NewBody(body),
 	)
 	sq := test_double.NewSpyQuestioner("but this")
 
@@ -20,7 +21,8 @@ func TestNewSequence(t *testing.T) {
 		t.Errorf("Expected title %q but got %q", "but this", ko.Title)
 	}
 
-	if ko.Body != "body" {
-		t.Errorf("Expected body %q but got %q", "body", ko.Body)
+	expectedBody := "\n\n\nbody"
+	if ko.Body != expectedBody {
+		t.Errorf("Expected body %q but got %q", expectedBody, ko.Body)
 	}
 }
