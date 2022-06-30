@@ -3,19 +3,25 @@ package main
 import (
 	"github.com/gypsydave5/kickoff"
 	"github.com/gypsydave5/kickoff/handler"
+	"github.com/gypsydave5/kickoff/handler/jira"
+	"github.com/gypsydave5/kickoff/persistence/github"
+	"github.com/gypsydave5/kickoff/questioner"
 	"log"
 	"os"
 )
 
 func main() {
+	username := os.Getenv("JIRA_USER")
+	key := os.Getenv("JIRA_KEY")
+	jiraClient := jira.NewClient(jira.NewBasicAuthHTTP(username, key))
 	engine := kickoff.NewEngine(
-		kickoff.NewGitHubPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient()),
-		handler.NewSequenceHandler(
-			handler.NewTitleHandler(kickoff.NewTextQuestion("Title: ")),
-			handler.NewBodyHandler(body),
+		github.Persistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient()),
+		handler.NewSequence(
+			jira.NewInitHandler(jiraClient),
+			handler.NewBody(body),
 		),
 
-		kickoff.NewTextQuestioner(os.Stdin, os.Stdout),
+		questioner.NewTextQuestioner(os.Stdin, os.Stdout),
 	)
 
 	err := engine.Start()

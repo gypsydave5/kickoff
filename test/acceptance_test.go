@@ -6,6 +6,8 @@ import (
 	"github.com/google/go-github/v45/github"
 	"github.com/gypsydave5/kickoff"
 	"github.com/gypsydave5/kickoff/handler"
+	github2 "github.com/gypsydave5/kickoff/persistence/github"
+	"github.com/gypsydave5/kickoff/questioner"
 	"github.com/gypsydave5/kickoff/test/random"
 	"github.com/gypsydave5/kickoff/test/test_double"
 	"testing"
@@ -13,15 +15,15 @@ import (
 )
 
 func TestCreatingAKickoffOnGitHub(t *testing.T) {
-	ghKOClient := kickoff.NewGitHubPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient())
+	ghKOClient := github2.Persistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient())
 	question := random.String16()
 	answer := random.String16()
 	spyQuestioner := test_double.NewSpyQuestioner(answer)
 
 	expectedBody := random.String16()
-	seq := handler.NewSequenceHandler(
-		handler.NewTitleHandler(kickoff.NewTextQuestion(question)),
-		handler.NewBodyHandler(expectedBody),
+	seq := handler.NewSequence(
+		handler.NewTitle(questioner.NewTextQuestion(question)),
+		handler.NewBody(expectedBody),
 	)
 
 	var ko = kickoff.NewEngine(

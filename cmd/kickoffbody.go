@@ -75,7 +75,10 @@ Give an ETA of when you think it will be _done_ (including DOD finished)
 
 ### Have you integrated with a new HTTP API as part of this story?
 
-<!--🚨You should be asking yourself how will you know that our interactions with another API are working correctly. Luckily our HTTP clients already give you some standard metrics for free, such as status codes, response times and logging. In the bright future when we have a dashboard you should be thinking of visualising these metrics so we have a sense of how well we're interacting with the new system.-->
+<!--🚨You should be asking yourself how will you know that our interactions with another API are working correctly. 
+Luckily our HTTP clients already give you some standard metrics for free, such as status codes, response times and logging.
+In the bright future when we have a dashboard you should be thinking of visualising these metrics so we have a sense of
+how well we're interacting with the new system.-->
 
 ### What knowledge do you need to be able to work on this ticket?
 

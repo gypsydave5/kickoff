@@ -1,0 +1,10 @@
+GET https://saltpayco.atlassian.net/rest/api/3/search?jql=project%3DSAG
+Accept: application/json
+Authorization: Basic ZGF2aWQud2lja2VzQHNhbHRwYXkuY286QVFraGNaekJJNGZ0ZUl5UzE5NnFCNDUz
+
+###
+GET https://saltpayco.atlassian.net/rest/api/3/issue/SAG-403
+Accept: application/json
+Authorization: Basic ZGF2aWQud2lja2VzQHNhbHRwYXkuY286QVFraGNaekJJNGZ0ZUl5UzE5NnFCNDUz
+
+###

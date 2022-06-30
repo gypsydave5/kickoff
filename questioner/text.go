@@ -1,4 +1,4 @@
-package kickoff
+package questioner
 
 import (
 	"bufio"

@@ -1,16 +1,16 @@
-package kickoff_test
+package handler_test
 
 import (
-	"github.com/gypsydave5/kickoff"
-	"github.com/gypsydave5/kickoff/handler"
+	h "github.com/gypsydave5/kickoff/handler"
+	"github.com/gypsydave5/kickoff/questioner"
 	"github.com/gypsydave5/kickoff/test/test_double"
 	"testing"
 )
 
 func TestNewSequence(t *testing.T) {
-	seq := handler.NewSequenceHandler(
-		handler.NewTitleHandler(kickoff.NewTextQuestion("hello")),
-		handler.NewBodyHandler("body"),
+	seq := h.NewSequence(
+		h.NewTitle(questioner.NewTextQuestion("hello")),
+		h.NewBody("body"),
 	)
 	sq := test_double.NewSpyQuestioner("but this")
 

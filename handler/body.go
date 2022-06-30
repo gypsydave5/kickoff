@@ -2,17 +2,18 @@ package handler
 
 import (
 	"github.com/gypsydave5/kickoff"
+	"github.com/gypsydave5/kickoff/questioner"
 )
 
-type BodyHandler struct {
+type Body struct {
 	body string
 }
 
-func (b BodyHandler) Handle(kickoff *kickoff.Kickoff, _ kickoff.Questioner) (*kickoff.Kickoff, error) {
-	kickoff.Body = b.body
+func (b Body) Handle(kickoff *kickoff.Kickoff, _ questioner.Questioner) (*kickoff.Kickoff, error) {
+	kickoff.AddSection(b.body)
 	return kickoff, nil
 }
 
-func NewBodyHandler(body string) *BodyHandler {
-	return &BodyHandler{body: body}
+func NewBody(body string) *Body {
+	return &Body{body: body}
 }

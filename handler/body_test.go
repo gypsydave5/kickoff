@@ -1,4 +1,4 @@
-package kickoff_test
+package handler_test
 
 import (
 	"github.com/gypsydave5/kickoff"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestBodyHandler(t *testing.T) {
-	h := handler.NewBodyHandler("body")
+	h := handler.NewBody("body")
 	sq := test_double.NewSpyQuestioner()
 	initalKickOff := kickoff.NewKickoff("")
 

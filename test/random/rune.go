@@ -27,16 +27,19 @@ func RangeTableSize(tab *unicode.RangeTable) int {
 
 func RunesFromRange(tab *unicode.RangeTable) []rune {
 	var res []rune
+
 	for _, r16 := range tab.R16 {
 		for c := r16.Lo; c <= r16.Hi; c += r16.Stride {
 			res = append(res, rune(c))
 		}
 	}
+
 	for _, r32 := range tab.R32 {
 		for c := r32.Lo; c <= r32.Hi; c += r32.Stride {
 			res = append(res, rune(c))
 		}
 	}
+
 	return res
 }
 
@@ -49,24 +52,15 @@ func Range16Size(r unicode.Range16) int {
 }
 
 func RuneFromRange16(r unicode.Range16, index int) rune {
-	if index > Range16Size(r) {
-		panic("Index out of range")
-	}
 	return rune(r.Lo + (uint16(index) * r.Stride))
 }
 
 func RuneFromRange32(r unicode.Range32, index int) rune {
-	if index > Range32Size(r) {
-		panic("Index out of range")
-	}
 	return rune(r.Lo + (uint32(index) * r.Stride))
 }
 
 func RuneFromRangeTable(tab *unicode.RangeTable, index int) rune {
 	i := index
-	if i > RangeTableSize(tab) {
-		panic("Index out of range")
-	}
 	for _, r16 := range tab.R16 {
 		if i <= int(Range16Size(r16)) {
 			return RuneFromRange16(r16, i)

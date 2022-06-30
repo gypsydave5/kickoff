@@ -1,13 +1,16 @@
 package handler
 
-import "github.com/gypsydave5/kickoff"
+import (
+	"github.com/gypsydave5/kickoff"
+	"github.com/gypsydave5/kickoff/questioner"
+)
 
-type InitSequenceHandler struct {
+type InitSequence struct {
 	first kickoff.InitialHandler
 	rest  []kickoff.Handler
 }
 
-func (s InitSequenceHandler) Handle(questioner kickoff.Questioner) (*kickoff.Kickoff, error) {
+func (s InitSequence) Handle(questioner questioner.Questioner) (*kickoff.Kickoff, error) {
 	ko, _ := s.first.Handle(questioner)
 	for _, h := range s.rest {
 		ko, _ = h.Handle(ko, questioner)
@@ -16,6 +19,6 @@ func (s InitSequenceHandler) Handle(questioner kickoff.Questioner) (*kickoff.Kic
 	return ko, nil
 }
 
-func NewSequenceHandler(first kickoff.InitialHandler, rest ...kickoff.Handler) *InitSequenceHandler {
-	return &InitSequenceHandler{first: first, rest: rest}
+func NewSequence(first kickoff.InitialHandler, rest ...kickoff.Handler) *InitSequence {
+	return &InitSequence{first: first, rest: rest}
 }

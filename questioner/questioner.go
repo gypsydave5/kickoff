@@ -1,4 +1,4 @@
-package kickoff
+package questioner
 
 type Question interface {
 	String() string

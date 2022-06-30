@@ -2,7 +2,7 @@ package kickoff
 
 import (
 	"fmt"
-	"github.com/gypsydave5/kickoff"
+	"github.com/gypsydave5/kickoff/questioner"
 	"github.com/gypsydave5/kickoff/test/random"
 	"strings"
 	"testing"
@@ -15,9 +15,9 @@ func TestTextQuestioner_ReadingAndWriting(t *testing.T) {
 	out := new(strings.Builder)
 	in := strings.NewReader(fmt.Sprintf("%s\n", answer))
 
-	q := kickoff.NewTextQuestioner(in, out)
+	q := questioner.NewTextQuestioner(in, out)
 
-	gotAnswer, err := q.AskQuestion(kickoff.NewTextQuestion(question))
+	gotAnswer, err := q.AskQuestion(questioner.NewTextQuestion(question))
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
 	}

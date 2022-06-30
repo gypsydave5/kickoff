@@ -1,14 +1,16 @@
 package kickoff
 
+import questioner2 "github.com/gypsydave5/kickoff/questioner"
+
 // Persistence interface represents some external service where your kickoffs are stored once generated.
 type Persistence interface {
-	Add(kickoff *Kickoff) error
+	Save(kickoff *Kickoff) error
 }
 
 type Engine struct {
 	persistence Persistence
 	handler     InitialHandler
-	questioner  Questioner
+	questioner  questioner2.Questioner
 }
 
 func (e Engine) Start() error {
@@ -17,26 +19,30 @@ func (e Engine) Start() error {
 		return err
 	}
 
-	err = e.persistence.Add(ko)
+	err = e.persistence.Save(ko)
 	return err
 }
 
-func NewEngine(client Persistence, handler InitialHandler, questioner Questioner) *Engine {
+func NewEngine(client Persistence, handler InitialHandler, questioner questioner2.Questioner) *Engine {
 	return &Engine{client, handler, questioner}
 }
 
 type InitialHandler interface {
-	Handle(questioner Questioner) (*Kickoff, error)
+	Handle(questioner questioner2.Questioner) (*Kickoff, error)
 }
 
 type Handler interface {
-	Handle(kickoff *Kickoff, questioner Questioner) (*Kickoff, error)
+	Handle(kickoff *Kickoff, questioner questioner2.Questioner) (*Kickoff, error)
 }
 
 // Kickoff represents a kickoff
 type Kickoff struct {
 	Title string
 	Body  string
+}
+
+func (k *Kickoff) AddSection(line string) {
+	k.Body = k.Body + "\n\n\n" + line
 }
 
 func NewKickoff(title string) *Kickoff {
