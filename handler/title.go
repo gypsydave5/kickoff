@@ -2,18 +2,18 @@ package handler
 
 import (
 	"github.com/gypsydave5/kickoff"
-	"github.com/gypsydave5/kickoff/questioner"
+	"github.com/gypsydave5/kickoff/question"
 )
 
 type TitleHandler struct {
-	question questioner.Question
+	question question.Question
 }
 
-func NewTitle(question questioner.Question) *TitleHandler {
+func NewTitle(question question.Question) *TitleHandler {
 	return &TitleHandler{question}
 }
 
-func (t TitleHandler) Handle(questioner questioner.Questioner) (*kickoff.Kickoff, error) {
+func (t TitleHandler) Handle(questioner question.Input) (*kickoff.Kickoff, error) {
 	answer, err := questioner.Ask(t.question)
 	if err != nil {
 		return &kickoff.Kickoff{}, err

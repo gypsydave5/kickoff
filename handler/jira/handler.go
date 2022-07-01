@@ -3,7 +3,7 @@ package jira
 import (
 	"fmt"
 	"github.com/gypsydave5/kickoff"
-	"github.com/gypsydave5/kickoff/questioner"
+	"github.com/gypsydave5/kickoff/question"
 )
 
 type InitHandler struct {
@@ -14,7 +14,7 @@ func NewInitHandler(client *Client) *InitHandler {
 	return &InitHandler{client}
 }
 
-func (t InitHandler) Handle(questioner questioner.Questioner) (*kickoff.Kickoff, error) {
+func (t InitHandler) Handle(questioner question.Input) (*kickoff.Kickoff, error) {
 	storyID, err := questioner.Ask(whatIsYourJiraStoryId{})
 	if err != nil {
 		return &kickoff.Kickoff{}, err

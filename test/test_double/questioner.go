@@ -1,15 +1,15 @@
 package test_double
 
 import (
-	"github.com/gypsydave5/kickoff/questioner"
+	"github.com/gypsydave5/kickoff/question"
 )
 
 type SpyQuestioner struct {
-	Answers   []questioner.Answer
-	Questions []questioner.Question
+	Answers   []question.Answer
+	Questions []question.Question
 }
 
-func (sq *SpyQuestioner) Ask(question questioner.Question) (questioner.Answer, error) {
+func (sq *SpyQuestioner) Ask(question question.Question) (question.Answer, error) {
 	sq.Questions = append(sq.Questions, question)
 	answer := sq.Answers[0]
 	sq.Answers = sq.Answers[1:]
@@ -19,7 +19,7 @@ func (sq *SpyQuestioner) Ask(question questioner.Question) (questioner.Answer, e
 func NewSpyQuestioner(answers ...string) *SpyQuestioner {
 	q := &SpyQuestioner{}
 	for _, answer := range answers {
-		q.Answers = append(q.Answers, questioner.NewTextAnswer(answer))
+		q.Answers = append(q.Answers, question.NewTextAnswer(answer))
 	}
 	return q
 }

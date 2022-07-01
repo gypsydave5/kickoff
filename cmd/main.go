@@ -5,7 +5,7 @@ import (
 	"github.com/gypsydave5/kickoff/handler"
 	"github.com/gypsydave5/kickoff/handler/jira"
 	"github.com/gypsydave5/kickoff/persistence/github"
-	"github.com/gypsydave5/kickoff/questioner"
+	"github.com/gypsydave5/kickoff/question"
 	"log"
 	"os"
 )
@@ -21,7 +21,7 @@ func main() {
 			handler.NewBody(body),
 		),
 
-		questioner.NewTextQuestioner(os.Stdin, os.Stdout),
+		question.NewCommandLine(os.Stdin, os.Stdout),
 	)
 
 	err := engine.Start()

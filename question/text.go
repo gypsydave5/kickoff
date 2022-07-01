@@ -1,4 +1,4 @@
-package questioner
+package question
 
 import (
 	"bufio"
@@ -22,7 +22,7 @@ func (t CommandLine) Ask(question Question) (Answer, error) {
 	return NewTextAnswer(text), nil
 }
 
-func NewTextQuestioner(input io.Reader, output io.Writer) *CommandLine {
+func NewCommandLine(input io.Reader, output io.Writer) *CommandLine {
 	return &CommandLine{input: input, output: output}
 }
 

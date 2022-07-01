@@ -1,8 +1,8 @@
-package questioner_test
+package question_test
 
 import (
 	"fmt"
-	"github.com/gypsydave5/kickoff/questioner"
+	"github.com/gypsydave5/kickoff/question"
 	"github.com/gypsydave5/kickoff/test/random"
 	"strings"
 	"testing"
@@ -10,14 +10,14 @@ import (
 
 func TestTextQuestioner_ReadingAndWriting(t *testing.T) {
 	answer := random.String16()
-	question := random.String16()
+	q := random.String16()
 
 	out := new(strings.Builder)
 	in := strings.NewReader(fmt.Sprintf("%s\n", answer))
 
-	q := questioner.NewTextQuestioner(in, out)
+	input := question.NewCommandLine(in, out)
 
-	gotAnswer, err := q.Ask(questioner.NewTextQuestion(question))
+	gotAnswer, err := input.Ask(question.NewTextQuestion(q))
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
 	}
@@ -28,7 +28,7 @@ func TestTextQuestioner_ReadingAndWriting(t *testing.T) {
 
 	gotQuestion := out.String()
 
-	if gotQuestion != question {
-		t.Errorf("Wanted %q got %q", question, gotQuestion)
+	if gotQuestion != q {
+		t.Errorf("Wanted %q got %q", q, gotQuestion)
 	}
 }

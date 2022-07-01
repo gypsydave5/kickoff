@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/gypsydave5/kickoff"
-	"github.com/gypsydave5/kickoff/questioner"
+	"github.com/gypsydave5/kickoff/question"
 )
 
 type InitSequence struct {
@@ -10,7 +10,7 @@ type InitSequence struct {
 	rest  []kickoff.Handler
 }
 
-func (s InitSequence) Handle(questioner questioner.Questioner) (*kickoff.Kickoff, error) {
+func (s InitSequence) Handle(questioner question.Input) (*kickoff.Kickoff, error) {
 	ko, _ := s.first.Handle(questioner)
 	for _, h := range s.rest {
 		ko, _ = h.Handle(ko, questioner)

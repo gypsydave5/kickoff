@@ -7,7 +7,7 @@ import (
 	"github.com/gypsydave5/kickoff"
 	"github.com/gypsydave5/kickoff/handler"
 	github2 "github.com/gypsydave5/kickoff/persistence/github"
-	"github.com/gypsydave5/kickoff/questioner"
+	"github.com/gypsydave5/kickoff/question"
 	"github.com/gypsydave5/kickoff/test/random"
 	"github.com/gypsydave5/kickoff/test/test_double"
 	"testing"
@@ -16,13 +16,13 @@ import (
 
 func TestCreatingAKickoffOnGitHub(t *testing.T) {
 	ghKOClient := github2.NewPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient())
-	question := random.String16()
+	q := random.String16()
 	answer := random.String16()
 	spyQuestioner := test_double.NewSpyQuestioner(answer)
 
 	expectedBody := random.String16()
 	seq := handler.NewSequence(
-		handler.NewTitle(questioner.NewTextQuestion(question)),
+		handler.NewTitle(question.NewTextQuestion(q)),
 		handler.NewBody(expectedBody),
 	)
 
@@ -41,8 +41,8 @@ func TestCreatingAKickoffOnGitHub(t *testing.T) {
 		t.Errorf("Wrong number of questions asked: %d", len(spyQuestioner.Questions))
 	}
 	askedQuestion := spyQuestioner.Questions[0].String()
-	if askedQuestion != question {
-		t.Errorf("Wanted question %q to be asked, but it was %q", question, askedQuestion)
+	if askedQuestion != q {
+		t.Errorf("Wanted question %q to be asked, but it was %q", q, askedQuestion)
 	}
 
 	time.Sleep(time.Second * 2) // takes a while for the change to happen in GH

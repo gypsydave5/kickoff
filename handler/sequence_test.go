@@ -2,7 +2,7 @@ package handler_test
 
 import (
 	h "github.com/gypsydave5/kickoff/handler"
-	"github.com/gypsydave5/kickoff/questioner"
+	"github.com/gypsydave5/kickoff/question"
 	"github.com/gypsydave5/kickoff/test/test_double"
 	"testing"
 )
@@ -10,7 +10,7 @@ import (
 func TestNewSequence(t *testing.T) {
 	body := "body"
 	seq := h.NewSequence(
-		h.NewTitle(questioner.NewTextQuestion("hello")),
+		h.NewTitle(question.NewTextQuestion("hello")),
 		h.NewBody(body),
 	)
 	sq := test_double.NewSpyQuestioner("but this")
