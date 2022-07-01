@@ -21,16 +21,20 @@ type Story struct {
 }
 
 type Client struct {
-	http *http.Client
+	http       *http.Client
+	pathPrefix string
 }
 
-func NewClient(http *http.Client) *Client {
-	return &Client{http: http}
+func NewClient(pathPrefix string, http *http.Client) *Client {
+	return &Client{
+		http:       http,
+		pathPrefix: pathPrefix,
+	}
 }
 
 func (c Client) GetStory(storyID string) (Story, error) {
 	var s Story
-	req, _ := http.NewRequest(http.MethodGet, "https://saltpayco.atlassian.net/rest/api/3/issue/"+storyID, nil)
+	req, _ := http.NewRequest(http.MethodGet, c.pathPrefix+"/rest/api/3/issue/"+storyID, nil)
 	res, err := c.http.Do(req)
 	if err != nil {
 		return s, err

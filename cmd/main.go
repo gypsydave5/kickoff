@@ -13,7 +13,7 @@ import (
 func main() {
 	username := os.Getenv("JIRA_USER")
 	key := os.Getenv("JIRA_KEY")
-	jiraClient := jira.NewClient(jira.NewBasicAuthHTTP(username, key))
+	jiraClient := jira.NewClient("https://saltpayco.atlassian.net", jira.NewBasicAuthHTTP(username, key))
 	engine := kickoff.NewEngine(
 		github.Persistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient()),
 		handler.NewSequence(
