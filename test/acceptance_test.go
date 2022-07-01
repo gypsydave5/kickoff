@@ -15,7 +15,7 @@ import (
 )
 
 func TestCreatingAKickoffOnGitHub(t *testing.T) {
-	ghKOClient := github2.Persistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient())
+	ghKOClient := github2.NewPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient())
 	question := random.String16()
 	answer := random.String16()
 	spyQuestioner := test_double.NewSpyQuestioner(answer)

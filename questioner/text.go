@@ -6,12 +6,12 @@ import (
 	"io"
 )
 
-type TextQuestioner struct {
+type CommandLine struct {
 	input  io.Reader
 	output io.Writer
 }
 
-func (t TextQuestioner) AskQuestion(question Question) (Answer, error) {
+func (t CommandLine) Ask(question Question) (Answer, error) {
 	_, err := fmt.Fprint(t.output, question)
 	if err != nil {
 		return NewTextAnswer(""), err
@@ -22,8 +22,8 @@ func (t TextQuestioner) AskQuestion(question Question) (Answer, error) {
 	return NewTextAnswer(text), nil
 }
 
-func NewTextQuestioner(input io.Reader, output io.Writer) *TextQuestioner {
-	return &TextQuestioner{input: input, output: output}
+func NewTextQuestioner(input io.Reader, output io.Writer) *CommandLine {
+	return &CommandLine{input: input, output: output}
 }
 
 type TextAnswer struct {

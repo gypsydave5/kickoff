@@ -7,27 +7,37 @@ import (
 	"net/http"
 )
 
-// Persistence creates a new GitHubPersistence object
-func Persistence(owner string, repo string, client *http.Client) *GitHubPersistence {
-	return &GitHubPersistence{
-		github.NewClient(client),
-		owner,
-		repo,
+// NewPersistence creates a new Persistence object
+func NewPersistence(owner string, repo string, client *http.Client) *Persistence {
+	return &Persistence{
+		gitHubGateway: Gateway{
+			gitHubClient: github.NewClient(client),
+			owner:        owner,
+			repo:         repo,
+		},
 	}
 }
 
-// GitHubPersistence persists kickoffs on a GitHub repository's Issues
-type GitHubPersistence struct {
-	gitHubClient *github.Client
-	owner        string
-	repo         string
+// Persistence persists kickoffs on a GitHub repository's Issues
+type Persistence struct {
+	gitHubGateway Gateway
 }
 
-// Add saves a Kickoff as a GitHub issue
-func (c GitHubPersistence) Save(ko *kickoff.Kickoff) error {
-	_, _, err := c.gitHubClient.Issues.Create(context.Background(), c.owner, c.repo, &github.IssueRequest{
+// Save saves a Kickoff as a GitHub issue
+func (c Persistence) Save(ko *kickoff.Kickoff) error {
+	return c.gitHubGateway.CreateIssue(&github.IssueRequest{
 		Title: github.String(ko.Title),
 		Body:  github.String(ko.Body),
 	})
+}
+
+type Gateway struct {
+	owner        string
+	repo         string
+	gitHubClient *github.Client
+}
+
+func (g Gateway) CreateIssue(i *github.IssueRequest) error {
+	_, _, err := g.gitHubClient.Issues.Create(context.Background(), g.owner, g.repo, i)
 	return err
 }

@@ -9,5 +9,5 @@ type Answer interface {
 }
 
 type Questioner interface {
-	AskQuestion(Question) (Answer, error)
+	Ask(Question) (Answer, error)
 }

@@ -14,7 +14,7 @@ func NewTitle(question questioner.Question) *TitleHandler {
 }
 
 func (t TitleHandler) Handle(questioner questioner.Questioner) (*kickoff.Kickoff, error) {
-	answer, err := questioner.AskQuestion(t.question)
+	answer, err := questioner.Ask(t.question)
 	if err != nil {
 		return &kickoff.Kickoff{}, err
 	}

@@ -17,7 +17,7 @@ func TestTextQuestioner_ReadingAndWriting(t *testing.T) {
 
 	q := questioner.NewTextQuestioner(in, out)
 
-	gotAnswer, err := q.AskQuestion(questioner.NewTextQuestion(question))
+	gotAnswer, err := q.Ask(questioner.NewTextQuestion(question))
 	if err != nil {
 		t.Errorf("Unexpected error: %s", err)
 	}

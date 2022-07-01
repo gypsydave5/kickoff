@@ -15,7 +15,7 @@ func NewInitHandler(client *Client) *InitHandler {
 }
 
 func (t InitHandler) Handle(questioner questioner.Questioner) (*kickoff.Kickoff, error) {
-	storyID, err := questioner.AskQuestion(whatIsYourJiraStoryId{})
+	storyID, err := questioner.Ask(whatIsYourJiraStoryId{})
 	if err != nil {
 		return &kickoff.Kickoff{}, err
 	}

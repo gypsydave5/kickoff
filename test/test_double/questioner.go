@@ -9,7 +9,7 @@ type SpyQuestioner struct {
 	Questions []questioner.Question
 }
 
-func (sq *SpyQuestioner) AskQuestion(question questioner.Question) (questioner.Answer, error) {
+func (sq *SpyQuestioner) Ask(question questioner.Question) (questioner.Answer, error) {
 	sq.Questions = append(sq.Questions, question)
 	answer := sq.Answers[0]
 	sq.Answers = sq.Answers[1:]

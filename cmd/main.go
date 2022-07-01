@@ -15,7 +15,7 @@ func main() {
 	key := os.Getenv("JIRA_KEY")
 	jiraClient := jira.NewClient("https://saltpayco.atlassian.net", jira.NewBasicAuthHTTP(username, key))
 	engine := kickoff.NewEngine(
-		github.Persistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient()),
+		github.NewPersistence("gypsydave5", "kickoff", kickoff.NewGitHubOAuthHTTPClient()),
 		handler.NewSequence(
 			jira.NewInitHandler(jiraClient),
 			handler.NewBody(body),
